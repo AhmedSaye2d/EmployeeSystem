@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Host/Host.csproj" Id="4bf2cea2-22d1-49ce-932c-5e2864dd05ba" />
+  <Project Path="Application/Application.csproj" Id="8fe2dacd-4526-443a-b8e1-b7ffa6819795" />
+  <Project Path="Domain/Domain.csproj" Id="ec5e48d0-3377-40a5-997c-ac536fa3f2ee" />
+  <Project Path="Infrastructure/Infrastructure.csproj" Id="ea574326-7ace-438b-8234-5404dd545ad2" />
+  <Project Path="Tests/EmployeeSystem.Tests/EmployeeSystem.Tests.csproj" />
+</Solution>
