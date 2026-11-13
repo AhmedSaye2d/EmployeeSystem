@@ -1,0 +1,7 @@
+﻿namespace Domain.Entities
+{
+    public class VacationType : BaseEntity
+    {
+        public List<Vacation> Vacations { get; set; } = new List<Vacation>();
+    }
+}
