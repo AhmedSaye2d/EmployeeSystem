@@ -1,0 +1,13 @@
+.git
+.github
+.vs
+.vscode
+**/bin/
+**/obj/
+**/Logs/
+**/*.log
+**/.idea/
+**/scratch/
+TestResults/
+*.user
+*.suo
