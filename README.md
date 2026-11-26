@@ -203,7 +203,9 @@ EmployeeSystem/
 │   └── appsettings.json           # Connection strings, JWT, Email, RabbitMQ & Retry config
 ├── Tests/
 │   └── EmployeeSystem.Tests/      # xUnit test suite (18 passing tests)
-├── .github/workflows/ci-cd.yml    # GitHub Actions CI/CD pipeline
+├── .github/workflows/
+│   ├── ci.yml                     # GitHub Actions CI pipeline (Build, Test, Docker validation)
+│   └── cd.yml                     # GitHub Actions CD pipeline (Publish & Release image)
 ├── Dockerfile                     # Multi-stage .NET 10 build & runtime image
 ├── .dockerignore
 ├── docker-compose.yml             # API + SQL Server 2022 + RabbitMQ 3-Management
@@ -220,11 +222,13 @@ Orchestrates three services with health checks:
 2. **`rabbitmq`** (`rabbitmq:3-management`) on ports `5672` (AMQP) and `15672` (Management UI)
 3. **`api`** (built from multi-stage `Dockerfile`) on port `5000:8080`, starting only after `sqlserver` and `rabbitmq` pass health checks.
 
-### GitHub Actions Pipeline (`.github/workflows/ci-cd.yml`)
-Triggered on `push` and `pull_request` to `master` / `main`:
-1. **`build-and-test`**: Checks out code, sets up .NET 10 SDK, caches NuGet packages, restores, builds in `Release`, runs all unit tests, and uploads `.trx` test results.
-2. **`publish-artifact`**: Publishes `Host/Host.csproj` and uploads the deployable API binary artifact on `push`.
-3. **`docker-build`**: Validates the multi-stage `Dockerfile` using Docker Buildx.
+### GitHub Actions Pipelines (`.github/workflows/ci.yml` & `cd.yml`)
+- **CI (`.github/workflows/ci.yml`)** — Triggered on `push` and `pull_request` to `master` / `main`:
+  1. **`build-and-test`**: Checks out code, sets up .NET 10 SDK, caches NuGet packages, restores, builds in `Release`, runs all unit tests, and uploads `.trx` test results.
+  2. **`docker-validation`**: Validates the multi-stage `Dockerfile` using Docker Buildx.
+- **CD (`.github/workflows/cd.yml`)** — Triggered automatically after **CI Pipeline** succeeds on `master` / `main` (or via `workflow_dispatch`):
+  1. **`publish-artifact`**: Publishes `Host/Host.csproj` and uploads the deployable API binary artifact.
+  2. **`docker-release`**: Builds the release Docker image (`employeesystem-api:latest`).
 
 ---
 
